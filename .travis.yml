@@ -1,0 +1,36 @@
+sudo: required
+dist: xenial
+language: cpp
+
+matrix:
+  include:
+    - os: osx
+      compiler: clang
+      env: BUILD_TYPE=Debug
+      env: CXXFLAGS=-fno-var-tracking
+    - os: osx
+      compiler: clang
+      env: BUILD_TYPE=Release
+      env: CXXFLAGS=-fno-var-tracking
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake -E env CXXFLAGS="-fno-var-tracking" cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
+  - cmake -E env CXXFLAGS="-fno-var-tracking" cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE="$BUILD_TYPE" -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=ON
+
+
+script:
+  - cmake --build .
+  - ./IOStreams_Tester
+
+after_success:
+  - cmake --build . --target TestCoverage
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email:
+    recipients:
+      - contact@blacktoppstudios.com
+    on_success: change
+    on_failure: always
