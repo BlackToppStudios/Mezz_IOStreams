@@ -1,0 +1,54 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# QT Creator Items
+CMakeLists.txt.user*
+
+# VSCode
+.vscode*
+
+# Doxygen Temp Files
+*.tmp
+
+# Editor Temp Files
+*~
+*.autosave
+
+# Libraries
+*.a
+*.dll
+*.so
+*.so.*
+
+# File Browsers
+.DS_Store
+.directory
+
+# Ignore libincludes mercurial files
+.hg*
+
+# other git files
+.git*
