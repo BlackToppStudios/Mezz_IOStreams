@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef _Mezz_IOStreams_ArchiveEnumerations_h
-#define _Mezz_IOStreams_ArchiveEnumerations_h
+#ifndef Mezz_IOStreams_ArchiveEnumerations_h
+#define Mezz_IOStreams_ArchiveEnumerations_h
 
 #ifndef SWIG
     #include "BitFieldTools.h"
@@ -66,7 +66,7 @@ namespace Mezzanine
         ZPAQ,            ///< A compression method that uses a combination of LZ77 and BWT.
         Brotli,          ///< A google compression method based on LZ77 offering denser compression than DEFLATE.
         LZMA,            ///< The compression method used by 7zip offering dense compression.
-        LZ4,             ///< A compression method focused on compression and decompression speed.
+        LZ4              ///< A compression method focused on compression and decompression speed.
     };
 
     /// @brief Used to indicate an algorithm of encryption.
