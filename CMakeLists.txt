@@ -77,7 +77,7 @@ AddHeaderFile("ArchiveEntry.h")
 AddHeaderFile("ArchiveEnumerations.h")
 ShowList("Header Files:" "\t" "${PackageNameFiles}")
 
-#AddSourceFile("ArchiveEntry.cpp") # Temporary until we get any other source file
+AddSourceFile("ArchiveEntry.cpp") # Temporary until we get any other source file
 ShowList("Source Files:" "\t" "${PackageNameSourceFiles}")
 
 AddJagatiDoxInput("Dox.h")

@@ -40,6 +40,9 @@
 #ifndef Mezz_IOStreams_ArchiveEntry_h
 #define Mezz_IOStreams_ArchiveEntry_h
 
+/// @file
+/// @brief This file contains the ArchiveEntry data struct used by other I/O utilities.
+
 #ifndef SWIG
     #include "DataTypes.h"
     #include "ArchiveEnumerations.h"
@@ -127,8 +130,7 @@ namespace Mezzanine
         /// not result in a value of "1.0" due to floating point imprecision. Values returned ought to be in the
         /// range of 0.0-1.0, but no checks are performed to force this.
         /// @return Returns a PreciseReal containing the ratio of compression applied to this entry.
-        PreciseReal GetCompressionRatio() const
-            { return static_cast<PreciseReal>( this->CompressedSize ) / static_cast<PreciseReal>( this->Size ); }
+        PreciseReal GetCompressionRatio() const;
     };//ArchiveEntry
 
     /// @brief Convenience pointer type for ArchiveEntry.
