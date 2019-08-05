@@ -57,12 +57,12 @@ DEFAULT_TEST_GROUP(ArchiveEntryTests,ArchiveEntry)
     First.CompressedSize = 25;
 
     ArchiveEntry Second;
-    Second.Permissions = FilePermissions::Read | FilePermissions::Owner;
+    Second.Permissions = FilePermissions::Everyone_Read | FilePermissions::Owner_All;
     Second.Size = 1000;
     Second.CompressedSize = 10;
 
     ArchiveEntry Third;
-    Third.Permissions = FilePermissions::Read | FilePermissions::Owner | FilePermissions::Group_Write;
+    Third.Permissions = FilePermissions::Everyone_Read | FilePermissions::Owner_All | FilePermissions::Group_Write;
     Third.Size = 10000;
     Third.CompressedSize = 550;
 

@@ -110,13 +110,16 @@ namespace Mezzanine
         Owner_Write   = EnumBit(8),  ///< The owner can write to the file.
         Owner_Read    = EnumBit(9),  ///< The owner can read from the file.
         // Permission helper values
-        Read = Owner_Read | Group_Read | Other_Read,              ///< Everyone can read from the file.
-        Write = Owner_Write | Group_Write | Other_Write,          ///< Everyone can write to the file.
-        Execute = Owner_Execute | Group_Execute | Other_Execute,  ///< Everyone can execute the file.
+        Everyone_Read = Owner_Read | Group_Read | Other_Read,              ///< Everyone can read from the file.
+        Everyone_Write = Owner_Write | Group_Write | Other_Write,          ///< Everyone can write to the file.
+        Everyone_Execute = Owner_Execute | Group_Execute | Other_Execute,  ///< Everyone can execute the file.
         // User helper values
-        Other = Other_Read | Other_Write | Other_Execute,  ///< Other users have full file permissions.
-        Group = Group_Read | Group_Write | Group_Execute,  ///< Users in the owning group have full file permissions.
-        Owner = Owner_Read | Owner_Write | Owner_Execute   ///< The owner has full file permissions.
+        Other_All = Other_Read | Other_Write | Other_Execute,  ///< Other users have full file permissions.
+        Group_All = Group_Read | Group_Write | Group_Execute,  ///< Users in the owning group have full file permissions.
+        Owner_All = Owner_Read | Owner_Write | Owner_Execute,  ///< The owner has full file permissions.
+        // Common Helper Values
+        Unix_Default = Owner_All | Everyone_Read | Everyone_Execute,  ///< Equivalent of 755.
+        Unix_Default_No_Execute = Owner_All | Everyone_Read           ///< Equivalent of 644.
     };
     ENABLE_BITMASK_OPERATORS_INSIDE_MEZZANINE(FilePermissions)
 }//Mezzanine
