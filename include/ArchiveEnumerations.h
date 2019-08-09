@@ -80,9 +80,7 @@ namespace Mezzanine
         AES_256,         ///< A symmetric encryption with a 256-bit key size.
         RSA_128,         ///< An asymmetric encryption with a 128-bit key size.
         RSA_192,         ///< An asymmetric encryption with a 192-bit key size.
-        RSA_256,         ///< An asymmetric encryption with a 256-bit key size.
-        TDES_112,        ///< Also 3TES. A symmetric encryption with a 112-bit key size.
-        TDES_168         ///< Also 3TES. A symmetric encryption with a 168-bit key size.
+        RSA_256          ///< An asymmetric encryption with a 256-bit key size.
     };
 
     /// @brief Used to differentiate entries in some archive systems.
