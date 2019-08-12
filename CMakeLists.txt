@@ -73,11 +73,11 @@ IncludeJagatiPackage("Foundation")
 # Source files
 message(STATUS "Determining Source Files.")
 
-#AddHeaderFile("ArchiveEntry.h")
-#AddHeaderFile("ArchiveEnumerations.h")
+AddHeaderFile("ArchiveEntry.h")
+AddHeaderFile("ArchiveEnumerations.h")
 ShowList("Header Files:" "\t" "${PackageNameFiles}")
 
-#AddSourceFile("ArchiveEntry.cpp") # Temporary until we get any other source file
+AddSourceFile("ArchiveEntry.cpp") # Temporary until we get any other source file
 ShowList("Source Files:" "\t" "${PackageNameSourceFiles}")
 
 AddJagatiDoxInput("Dox.h")
@@ -88,7 +88,7 @@ ShowList("Doxygen Input Files:" "\t" "${PackageNameDoxFiles}")
 AddJagatiLibrary()
 CreateCoverageTarget(${IOStreamsLib} "${PackageNameSourceFiles}")
 
-#AddTestFile("ArchiveEntryTests.h")
+AddTestFile("ArchiveEntryTests.h")
 EmitTestCode()
 AddTestTarget()
 

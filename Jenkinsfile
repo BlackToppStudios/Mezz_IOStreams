@@ -19,7 +19,7 @@ pipeline {
                             hostname &&
                             cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
-                            ./PackageName_Tester xml
+                            ./IOStreams_Tester xml
                         """ }
                     }
                     post {
@@ -38,7 +38,7 @@ pipeline {
                             export PATH='$PATH:/usr/local/bin/' &&
                             cmake -E env CXXFLAGS="-fno-var-tracking" cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             cmake --build . &&
-                           ./PackageName_Tester xml
+                           ./IOStreams_Tester xml
                         """ }
                     }
                     post {
@@ -57,7 +57,7 @@ pipeline {
                             export MEZZ_PACKAGE_DIR=/home/pi/Code/ &&
                             cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
-                            ./PackageName_Tester xml
+                            ./IOStreams_Tester xml
                          """ }
                     }
                     post {
@@ -75,8 +75,8 @@ pipeline {
                             hostname &&
                             cmake -E env CXXFLAGS="-fno-var-tracking" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
-                            ./PackageName_Tester xml &&
-                            valgrind ./PackageName_Tester
+                            ./IOStreams_Tester xml &&
+                            valgrind ./IOStreams_Tester
                          """ }
                      }
                      post {
@@ -94,7 +94,7 @@ pipeline {
                             hostname &&
                             cmake -E env EMCC_DEBUG=2 CXXFLAGS="-fno-var-tracking -s WASM=1" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
-                            node PackageName_Tester.js NoThreads
+                            node IOStreams_Tester.js NoThreads
                         """ }
                     }
                     // Don't capture Emscripten logs, because it cannot make files
@@ -108,8 +108,8 @@ pipeline {
                             hostname &&
                             cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
-                            ./PackageName_Tester xml &&
-                            valgrind ./PackageName_Tester
+                            ./IOStreams_Tester xml &&
+                            valgrind ./IOStreams_Tester
                         """ }
                     }
                     post {
@@ -127,7 +127,7 @@ pipeline {
                             bat 'hostname'
                             bat 'cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
                             bat 'ninja'
-                            bat 'PackageName_Tester xml'
+                            bat 'IOStreams_Tester xml'
                         }
                     }
                     post {
@@ -145,7 +145,7 @@ pipeline {
                             bat 'hostname'
                             bat 'cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
                             bat 'ninja'
-                            bat 'PackageName_Tester xml'
+                            bat 'IOStreams_Tester xml'
                         }
                     }
                     post {
@@ -163,7 +163,7 @@ pipeline {
                             bat 'hostname'
                             bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_amd64 && cmake -G"Visual Studio 15 2017 Win64" .. -DCMAKE_BUILD_TYPE=DEBUG -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
                             bat 'cmake --build .'
-                            bat 'PackageName_Tester xml'
+                            bat 'IOStreams_Tester xml'
                         }
                     }
                     post {
@@ -186,7 +186,7 @@ pipeline {
                             hostname &&
                             cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
-                            ./PackageName_Tester xml
+                            ./IOStreams_Tester xml
                         """ }
                     }
                     post {
@@ -205,7 +205,7 @@ pipeline {
                             export PATH='$PATH:/usr/local/bin/' &&
                             cmake -E env CXXFLAGS="-fno-var-tracking" cmake -G"Xcode" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             cmake --build . &&
-                           ./PackageName_Tester xml
+                           ./IOStreams_Tester xml
                         """ }
                     }
                     post {
@@ -224,7 +224,7 @@ pipeline {
                             export MEZZ_PACKAGE_DIR=/home/pi/Code/ &&
                             cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
-                            ./PackageName_Tester xml
+                            ./IOStreams_Tester xml
                          """ }
                     }
                     post {
@@ -242,8 +242,8 @@ pipeline {
                             hostname &&
                             cmake -E env CXXFLAGS="-fno-var-tracking" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja  &&
-                            ./PackageName_Tester xml &&
-                            valgrind ./PackageName_Tester
+                            ./IOStreams_Tester xml &&
+                            valgrind ./IOStreams_Tester
                          """ }
                      }
                      post {
@@ -261,7 +261,7 @@ pipeline {
                             hostname &&
                             cmake -E env EMCC_DEBUG=2 CXXFLAGS="-fno-var-tracking -s WASM=1" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
-                            node PackageName_Tester.js NoThreads
+                            node IOStreams_Tester.js NoThreads
                         """ }
                     }
                     // Don't capture Emscripten logs, because it cannot make files
@@ -275,8 +275,8 @@ pipeline {
                             hostname &&
                             cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF &&
                             ninja &&
-                            ./PackageName_Tester xml &&
-                            valgrind ./PackageName_Tester
+                            ./IOStreams_Tester xml &&
+                            valgrind ./IOStreams_Tester
                         """ }
                     }
                     post {
@@ -294,7 +294,7 @@ pipeline {
                             bat 'hostname'
                             bat 'cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
                             bat 'ninja'
-                            bat 'PackageName_Tester xml'
+                            bat 'IOStreams_Tester xml'
                         }
                     }
                     post {
@@ -312,7 +312,7 @@ pipeline {
                             bat 'hostname'
                             bat 'cmake -E env CXXFLAGS="-fno-var-tracking-assignments" cmake -G"Ninja" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
                             bat 'ninja'
-                            bat 'PackageName_Tester xml'
+                            bat 'IOStreams_Tester xml'
                         }
                     }
                     post {
@@ -330,7 +330,7 @@ pipeline {
                             bat 'hostname'
                             bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_amd64 && cmake -G"Visual Studio 15 2017 Win64" .. -DCMAKE_BUILD_TYPE=RELEASE -DMEZZ_BuildDoxygen=OFF -DMEZZ_CodeCoverage=OFF'
                             bat 'cmake --build .'
-                            bat 'PackageName_Tester xml'
+                            bat 'IOStreams_Tester xml'
                         }
                     }
                     post {
