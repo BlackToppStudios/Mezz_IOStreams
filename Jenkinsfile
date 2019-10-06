@@ -28,8 +28,8 @@ pipeline {
                         }
                     }
                 }
-                stage('MacOSSierra') {
-                    agent { label "MacOSSierra" }
+                stage('MacOSAir') {
+                    agent { label "MacOSAir" }
                     steps {
                         checkout scm
                         sh 'mkdir -p build-debug'
@@ -195,8 +195,8 @@ pipeline {
                         }
                     }
                 }
-                stage('MacOSSierra') {
-                    agent { label "MacOSSierra" }
+                stage('MacOSAir') {
+                    agent { label "MacOSAir" }
                     steps {
                         checkout scm
                         sh 'mkdir -p build-release'
