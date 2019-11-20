@@ -75,9 +75,15 @@ message(STATUS "Determining Source Files.")
 
 AddHeaderFile("ArchiveEntry.h")
 AddHeaderFile("ArchiveEnumerations.h")
+AddHeaderFile("IOStream.h")
+AddHeaderFile("IStream.h")
+AddHeaderFile("OStream.h")
+AddHeaderFile("StreamBase.h")
 ShowList("Header Files:" "\t" "${PackageNameFiles}")
 
-AddSourceFile("ArchiveEntry.cpp") # Temporary until we get any other source file
+AddSourceFile("IOStream.cpp")
+AddSourceFile("IStream.cpp")
+AddSourceFile("OStream.cpp")
 ShowList("Source Files:" "\t" "${PackageNameSourceFiles}")
 
 AddJagatiDoxInput("Dox.h")

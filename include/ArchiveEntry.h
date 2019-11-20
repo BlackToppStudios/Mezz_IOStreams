@@ -130,7 +130,8 @@ namespace Mezzanine
         /// not result in a value of "1.0" due to floating point imprecision. Values returned ought to be in the
         /// range of 0.0-1.0, but no checks are performed to force this.
         /// @return Returns a PreciseReal containing the ratio of compression applied to this entry.
-        PreciseReal GetCompressionRatio() const;
+        PreciseReal GetCompressionRatio() const noexcept
+            { return static_cast<PreciseReal>( this->CompressedSize ) / static_cast<PreciseReal>( this->Size ); }
     };//ArchiveEntry
 
     /// @brief Convenience pointer type for ArchiveEntry.

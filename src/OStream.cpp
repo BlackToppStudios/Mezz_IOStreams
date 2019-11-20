@@ -38,13 +38,53 @@
    John Blackwood - makoenergy02@gmail.com
 */
 
-#include "ArchiveEntry.h"
-
-/// @file
-/// @brief This file shouldn't exist and the code here should be moved to the header once another source file exists.
+#include "OStream.h"
 
 namespace Mezzanine
 {
-    PreciseReal ArchiveEntry::GetCompressionRatio() const
-        { return static_cast<PreciseReal>( this->CompressedSize ) / static_cast<PreciseReal>( this->Size ); }
-}//Mezzanine
+    OStream::OStream(std::streambuf* Buf) :
+        std::ostream(Buf)
+        {  }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Stream Base Operations
+
+    Boole OStream::EoF() const
+        { return this->eof(); }
+
+    Boole OStream::Bad() const
+        { return this->bad(); }
+
+    Boole OStream::Fail() const
+        { return this->fail(); }
+
+    Boole OStream::IsValid() const
+        { return this->good(); }
+
+    void OStream::ClearErrors()
+        { this->clear(); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Output methods
+
+    size_t OStream::Write(const void* Buffer, StreamSize Size)
+    {
+        this->write(static_cast<const char*>(Buffer),Size);
+        return ( this->fail() ? 0 : Size );
+    }
+
+    void OStream::SetWritePosition(StreamPos Position)
+        { this->seekp(Position); }
+
+    void OStream::SetWritePosition(StreamOff Offset, SeekOrigin Origin)
+        { this->seekp(Offset,static_cast<std::ios_base::seekdir>(Origin)); }
+
+    StreamPos OStream::GetWritePosition()
+        { return this->tellp(); }
+
+    Boole OStream::Flush()
+    {
+        this->flush();
+        return !this->fail();
+    }
+}
