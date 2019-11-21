@@ -100,8 +100,10 @@ namespace Mezzanine
 
     size_t IOStream::Write(const void* Buffer, StreamSize Size)
     {
+        StreamPos PreWrite = this->GetWritePosition();
         this->write(static_cast<const char*>(Buffer),Size);
-        return ( this->fail() ? 0 : Size );
+        StreamPos PostWrite = this->GetWritePosition();
+        return ( PostWrite > PreWrite ? static_cast<size_t>( PostWrite - PreWrite ) : 0 );
     }
 
     void IOStream::SetWritePosition(StreamPos Position)

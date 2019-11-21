@@ -70,13 +70,13 @@ namespace Mezzanine
     size_t IStream::Read(void* Buffer, StreamSize Size)
     {
         this->read(static_cast<char*>(Buffer),Size);
-        return this->gcount();
+        return static_cast<size_t>( this->gcount() );
     }
 
     size_t IStream::ReadLine(Char8* Buffer, const size_t BufferSize, const Char8 Delim)
     {
         this->getline(Buffer,BufferSize,Delim);
-        return this->gcount();
+        return static_cast<size_t>( this->gcount() );
     }
 
     void IStream::SetReadPosition(StreamPos Position)

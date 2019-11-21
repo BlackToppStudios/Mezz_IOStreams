@@ -47,6 +47,9 @@
 
 namespace Mezzanine
 {
+    SAVE_WARNING_STATE
+    SUPPRESS_CLANG_WARNING("-Wpadded")
+
     ///////////////////////////////////////////////////////////////////////////////
     /// @brief Base class for streams that support both read and write operations.
     ///////////////////////////////////////
@@ -119,6 +122,8 @@ namespace Mezzanine
         /// @param Origin The starting point to be considered for the offset.
         virtual void SetStreamPosition(StreamOff Offset, SeekOrigin Origin);
     };//IOStream
+
+    RESTORE_WARNING_STATE
 
     /// @brief Convenience type for a standard input/output stream in a shared_ptr.
     using IOStreamPtr = std::shared_ptr<IOStream>;

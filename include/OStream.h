@@ -46,6 +46,9 @@
 
 namespace Mezzanine
 {
+    SAVE_WARNING_STATE
+    SUPPRESS_CLANG_WARNING("-Wpadded")
+
     ///////////////////////////////////////////////////////////////////////////////
     /// @brief Base class for output (write) streams with minimal implementation.
     ///////////////////////////////////////
@@ -88,6 +91,8 @@ namespace Mezzanine
         /// @copydoc iOutStream::Flush()
         virtual Boole Flush();
     };//OStream
+
+    RESTORE_WARNING_STATE
 
     /// @brief Convenience type for a standard output stream in a shared_ptr.
     using OStreamPtr = std::shared_ptr<OStream>;

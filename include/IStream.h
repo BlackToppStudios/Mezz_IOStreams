@@ -46,6 +46,9 @@
 
 namespace Mezzanine
 {
+    SAVE_WARNING_STATE
+    SUPPRESS_CLANG_WARNING("-Wpadded")
+
     ///////////////////////////////////////////////////////////////////////////////
     /// @brief Base class for input (read) streams with minimal implementation.
     ///////////////////////////////////////
@@ -92,6 +95,8 @@ namespace Mezzanine
         /// @copydoc iInStream::GetAsString()
         [[nodiscard]] virtual String GetAsString();
     };//IStream
+
+    RESTORE_WARNING_STATE
 
     /// @brief Convenience type for a standard input stream in a shared_ptr.
     using IStreamPtr = std::shared_ptr<IStream>;
