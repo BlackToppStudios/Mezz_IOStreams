@@ -77,10 +77,16 @@ namespace Mezzanine
     ///////////////////////////////////////////////////////////////////////////////
     // Input methods
 
-    size_t IOStream::Read(void* Buffer, StreamSize Size)
+    size_t IOStream::Read(void* Buffer, const StreamSize Size)
     {
         this->read(static_cast<char*>(Buffer),Size);
         return this->gcount();
+    }
+
+    size_t IOStream::ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim)
+    {
+        this->getline(Buffer,Size,Delim);
+        return static_cast<size_t>( this->gcount() );
     }
 
     void IOStream::SetReadPosition(StreamPos Position)
@@ -95,14 +101,31 @@ namespace Mezzanine
     Boole IOStream::Sync()
         { return ( this->sync() == 0 ); }
 
+    String IOStream::GetAsString()
+    {
+        String Ret;
+        size_t RetSize = static_cast<size_t>( this->GetSize() );
+        if( RetSize > 0 ) {
+            Ret.reserve(RetSize);
+        }
+
+        StreamPos SavedReadPos = this->GetReadPosition();
+        this->SetReadPosition(0);
+
+        Ret.append(std::istreambuf_iterator<char>(*this),{});
+
+        this->SetReadPosition(SavedReadPos);
+        return Ret;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////
     // Output methods
 
     size_t IOStream::Write(const void* Buffer, StreamSize Size)
     {
-        StreamPos PreWrite = this->GetWritePosition();
+        StreamPos PreWrite = this->tellp();
         this->write(static_cast<const char*>(Buffer),Size);
-        StreamPos PostWrite = this->GetWritePosition();
+        StreamPos PostWrite = this->tellp();
         return ( PostWrite > PreWrite ? static_cast<size_t>( PostWrite - PreWrite ) : 0 );
     }
 

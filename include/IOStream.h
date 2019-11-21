@@ -80,7 +80,9 @@ namespace Mezzanine
         // Input methods
 
         /// @copydoc iInStream::Read(void*, StreamSize)
-        virtual size_t Read(void* Buffer, StreamSize Size);
+        virtual size_t Read(void* Buffer, const StreamSize Size);
+        /// @copydoc iInStream::ReadLine(Char8*, const StreamSize, const Char8)
+        virtual size_t ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim = '\n');
 
         /// @copydoc iInStream::SetReadPosition(StreamPos)
         virtual void SetReadPosition(StreamPos Position);
@@ -91,6 +93,8 @@ namespace Mezzanine
 
         /// @copydoc iInStream::Sync()
         virtual Boole Sync();
+        /// @copydoc iInStream::GetAsString()
+        [[nodiscard]] virtual String GetAsString();
 
         ///////////////////////////////////////////////////////////////////////////////
         // Output methods

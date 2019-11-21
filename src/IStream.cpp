@@ -73,9 +73,9 @@ namespace Mezzanine
         return static_cast<size_t>( this->gcount() );
     }
 
-    size_t IStream::ReadLine(Char8* Buffer, const size_t BufferSize, const Char8 Delim)
+    size_t IStream::ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim)
     {
-        this->getline(Buffer,BufferSize,Delim);
+        this->getline(Buffer,Size,Delim);
         return static_cast<size_t>( this->gcount() );
     }
 
@@ -94,7 +94,7 @@ namespace Mezzanine
     String IStream::GetAsString()
     {
         String Ret;
-        size_t RetSize = this->GetSize();
+        size_t RetSize = static_cast<size_t>( this->GetSize() );
         if( RetSize > 0 ) {
             Ret.reserve(RetSize);
         }

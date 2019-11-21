@@ -78,10 +78,10 @@ namespace Mezzanine
         ///////////////////////////////////////////////////////////////////////////////
         // Input Functions
 
-        /// @copydoc iInStream::Read(void*, StreamSize)
-        virtual size_t Read(void* Buffer, StreamSize Size);
-        /// @copydoc iInStream::ReadLine(Char8*, const size_t, const Char8)
-        virtual size_t ReadLine(Char8* Buffer, const size_t BufferSize, const Char8 Delim = '\n');
+        /// @copydoc iInStream::Read(void*, const StreamSize)
+        virtual size_t Read(void* Buffer, const StreamSize Size);
+        /// @copydoc iInStream::ReadLine(Char8*, const StreamSize, const Char8)
+        virtual size_t ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim = '\n');
 
         /// @copydoc iInStream::SetReadPosition(StreamPos)
         virtual void SetReadPosition(StreamPos Position);

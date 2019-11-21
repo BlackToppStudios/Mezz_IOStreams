@@ -69,8 +69,10 @@ namespace Mezzanine
 
     size_t OStream::Write(const void* Buffer, StreamSize Size)
     {
+        StreamPos PreWrite = this->tellp();
         this->write(static_cast<const char*>(Buffer),Size);
-        return ( this->fail() ? 0 : Size );
+        StreamPos PostWrite = this->tellp();
+        return ( PostWrite > PreWrite ? static_cast<size_t>( PostWrite - PreWrite ) : 0 );
     }
 
     void OStream::SetWritePosition(StreamPos Position)

@@ -49,11 +49,11 @@
 
 namespace Mezzanine
 {
-    /// @brief Convenience define for the Stream position data type.
+    /// @brief Convenience type used to describe a particular point in the Stream.
     using StreamPos = std::streampos;
-    /// @brief Convenience define for the Stream offset data type.
+    /// @brief Convenience type used to describe the offset from one position in the Stream to another.
     using StreamOff = std::streamoff;
-    /// @brief Convenience define for the Stream size data type.
+    /// @brief Convenience type used to describe the size of the Stream or a subset of the Stream.
     using StreamSize = std::streamsize;
 
     /// @brief This enum describes the flags that control certain behaviors of a Stream.
@@ -152,13 +152,13 @@ namespace Mezzanine
         /// @param Buffer The buffer to be populated with the read data.
         /// @param Size The number of bytes to read from the Stream.
         /// @return Returns the number of bytes successfully read.
-        virtual size_t Read(void* Buffer, StreamSize Size) = 0;
+        virtual size_t Read(void* Buffer, const StreamSize Size) = 0;
         /// @brief Reads a single line from a String.
         /// @param Buffer Pointer to the buffer to copy to.
-        /// @param BufferSize The size of the Buffer parameter.
+        /// @param Size The size of the Buffer parameter.
         /// @param Delim The character that marks the end of a line.
         /// @return Returns the number of bytes actually read, not including the Delimiter.
-        virtual size_t ReadLine(Char8* Buffer, const size_t BufferSize, const Char8 Delim = '\n') = 0;
+        virtual size_t ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim = '\n') = 0;
 
         /// @brief Sets the position of the read cursor explicitly.
         /// @param Position The position to be set.Stream
