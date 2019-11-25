@@ -80,7 +80,7 @@ namespace Mezzanine
     size_t IOStream::Read(void* Buffer, const StreamSize Size)
     {
         this->read(static_cast<char*>(Buffer),Size);
-        return this->gcount();
+        return static_cast<size_t>( this->gcount() );
     }
 
     size_t IOStream::ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim)
