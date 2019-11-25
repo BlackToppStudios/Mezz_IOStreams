@@ -140,6 +140,10 @@ namespace Mezzanine
         virtual void ClearErrors() = 0;
     };//iStreamBase
 
+    #ifdef _MSC_VER
+    #pragma vtordisp(push, 2)
+    #endif
+
     ///////////////////////////////////////////////////////////////////////////////
     /// @brief Interface class for input (read) Streams.
     ///////////////////////////////////////
@@ -215,6 +219,10 @@ namespace Mezzanine
         /// @return Returns true if the flush was successful and the Stream is usable, false otherwise.
         virtual Boole Flush() = 0;
     };//iOutStream
+
+    #ifdef _MSC_VER
+    #pragma vtordisp(pop)
+    #endif
 
     RESTORE_WARNING_STATE
 }//Mezzanine
