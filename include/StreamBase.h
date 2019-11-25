@@ -81,6 +81,9 @@ namespace Mezzanine
         End       = std::ios_base::end   ///< The end of the Stream.
     };
 
+    SAVE_WARNING_STATE
+    SUPPRESS_CLANG_WARNING("-Wweak-vtables")
+
     ///////////////////////////////////////////////////////////////////////////////
     /// @brief The base interface for I/O Streams.
     ///////////////////////////////////////
@@ -212,6 +215,8 @@ namespace Mezzanine
         /// @return Returns true if the flush was successful and the Stream is usable, false otherwise.
         virtual Boole Flush() = 0;
     };//iOutStream
+
+    RESTORE_WARNING_STATE
 }//Mezzanine
 
 #endif
