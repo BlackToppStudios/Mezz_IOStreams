@@ -37,8 +37,8 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef Mezz_IOStreams_OStream_h
-#define Mezz_IOStreams_OStream_h
+#ifndef Mezz_IOStreams_InputStream_h
+#define Mezz_IOStreams_InputStream_h
 
 #ifndef SWIG
     #include "StreamBase.h"
@@ -50,52 +50,56 @@ namespace Mezzanine
     SUPPRESS_CLANG_WARNING("-Wpadded")
 
     ///////////////////////////////////////////////////////////////////////////////
-    /// @brief Base class for output (write) streams with minimal implementation.
+    /// @brief Base class for input (read) streams with minimal implementation.
     ///////////////////////////////////////
-    class OStream : public iOutStream, public std::ostream
+    class InputStream : public InputStreamBase, public std::istream
     {
     public:
         /// @brief Class constructor.
         /// @param Buf A pointer to the buffer that will be streamed.
-        OStream(std::streambuf* Buf);
+        InputStream(std::streambuf* Buf);
         /// @brief Class destructor.
-        virtual ~OStream() = default;
+        virtual ~InputStream() = default;
 
         ///////////////////////////////////////////////////////////////////////////////
         // Stream Base Operations
 
-        /// @copydoc iStreamBase::EoF() const
+        /// @copydoc StreamBase::EoF() const
         [[nodiscard]] virtual Boole EoF() const;
-        /// @copydoc iStreamBase::Bad() const
+        /// @copydoc StreamBase::Bad() const
         [[nodiscard]] virtual Boole Bad() const;
-        /// @copydoc iStreamBase::Fail() const
+        /// @copydoc StreamBase::Fail() const
         [[nodiscard]] virtual Boole Fail() const;
-        /// @copydoc iStreamBase::IsValid() const
+        /// @copydoc StreamBase::IsValid() const
         [[nodiscard]] virtual Boole IsValid() const;
-        /// @copydoc iStreamBase::ClearErrors()
+        /// @copydoc StreamBase::ClearErrors()
         virtual void ClearErrors();
 
         ///////////////////////////////////////////////////////////////////////////////
-        // Output methods
+        // Input Functions
 
-        /// @copydoc iOutStream::Write(const void*, StreamSize)
-        virtual size_t Write(const void* Buffer, StreamSize Size);
+        /// @copydoc InputStreamBase::Read(void*, const StreamSize)
+        virtual size_t Read(void* Buffer, const StreamSize Size);
+        /// @copydoc InputStreamBase::ReadLine(Char8*, const StreamSize, const Char8)
+        virtual size_t ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim = '\n');
 
-        /// @copydoc iOutStream::SetWritePosition(StreamPos)
-        virtual void SetWritePosition(StreamPos Position);
-        /// @copydoc iOutStream::SetWritePosition(StreamOff, SeekOrigin)
-        virtual void SetWritePosition(StreamOff Offset, SeekOrigin Origin);
-        /// @copydoc iOutStream::GetWritePosition()
-        [[nodiscard]] virtual StreamPos GetWritePosition();
+        /// @copydoc InputStreamBase::SetReadPosition(StreamPos)
+        virtual void SetReadPosition(StreamPos Position);
+        /// @copydoc InputStreamBase::SetReadPosition(StreamOff, SeekOrigin)
+        virtual void SetReadPosition(StreamOff Offset, SeekOrigin Origin);
+        /// @copydoc InputStreamBase::GetReadPosition()
+        [[nodiscard]] virtual StreamPos GetReadPosition();
 
-        /// @copydoc iOutStream::Flush()
-        virtual Boole Flush();
-    };//OStream
+        /// @copydoc InputStreamBase::Sync()
+        virtual Boole Sync();
+    };//InputStream
 
     RESTORE_WARNING_STATE
 
-    /// @brief Convenience type for a standard output stream in a shared_ptr.
-    using OStreamPtr = std::shared_ptr<OStream>;
+    /// @brief Convenience type for a standard input stream in a shared_ptr.
+    using StdInputStreamPtr = std::shared_ptr<std::istream>;
+    /// @brief Convenience type for a Mezzanine input stream in a shared_ptr.
+    using InputStreamPtr = std::shared_ptr<InputStream>;
 }//Mezzanine
 
 #endif

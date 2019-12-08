@@ -37,12 +37,12 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef Mezz_IOStreams_IOStream_h
-#define Mezz_IOStreams_IOStream_h
+#ifndef Mezz_IOStreams_InputOutputStream_h
+#define Mezz_IOStreams_InputOutputStream_h
 
 #ifndef SWIG
-    #include "IStream.h"
-    #include "OStream.h"
+    #include "InputStream.h"
+    #include "OutputStream.h"
 #endif
 
 namespace Mezzanine
@@ -53,63 +53,61 @@ namespace Mezzanine
     ///////////////////////////////////////////////////////////////////////////////
     /// @brief Base class for streams that support both read and write operations.
     ///////////////////////////////////////
-    class IOStream : public iInStream, public iOutStream, public std::iostream
+    class InputOutputStream : public InputStreamBase, public OutputStreamBase, public std::iostream
     {
     public:
         /// @brief Class constructor.
         /// @param Buf A pointer to the buffer that will be streamed.
-        IOStream(std::streambuf* Buf);
+        InputOutputStream(std::streambuf* Buf);
         /// @brief Class destructor.
-        virtual ~IOStream() = default;
+        virtual ~InputOutputStream() = default;
 
         ///////////////////////////////////////////////////////////////////////////////
         // Stream Base Operations
 
-        /// @copydoc iStreamBase::EoF() const
+        /// @copydoc StreamBase::EoF() const
         [[nodiscard]] virtual Boole EoF() const;
-        /// @copydoc iStreamBase::Bad() const
+        /// @copydoc StreamBase::Bad() const
         [[nodiscard]] virtual Boole Bad() const;
-        /// @copydoc iStreamBase::Fail() const
+        /// @copydoc StreamBase::Fail() const
         [[nodiscard]] virtual Boole Fail() const;
-        /// @copydoc iStreamBase::IsValid() const
+        /// @copydoc StreamBase::IsValid() const
         [[nodiscard]] virtual Boole IsValid() const;
-        /// @copydoc iStreamBase::ClearErrors()
+        /// @copydoc StreamBase::ClearErrors()
         virtual void ClearErrors();
 
         ///////////////////////////////////////////////////////////////////////////////
         // Input methods
 
-        /// @copydoc iInStream::Read(void*, StreamSize)
+        /// @copydoc InputStream::Read(void*, StreamSize)
         virtual size_t Read(void* Buffer, const StreamSize Size);
-        /// @copydoc iInStream::ReadLine(Char8*, const StreamSize, const Char8)
+        /// @copydoc InputStream::ReadLine(Char8*, const StreamSize, const Char8)
         virtual size_t ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim = '\n');
 
-        /// @copydoc iInStream::SetReadPosition(StreamPos)
+        /// @copydoc InputStream::SetReadPosition(StreamPos)
         virtual void SetReadPosition(StreamPos Position);
-        /// @copydoc iInStream::SetReadPosition(StreamOff, SeekOrigin)
+        /// @copydoc InputStream::SetReadPosition(StreamOff, SeekOrigin)
         virtual void SetReadPosition(StreamOff Offset, SeekOrigin Origin);
-        /// @copydoc iInStream::GetReadPosition()
+        /// @copydoc InputStream::GetReadPosition()
         [[nodiscard]] virtual StreamPos GetReadPosition();
 
-        /// @copydoc iInStream::Sync()
+        /// @copydoc InputStream::Sync()
         virtual Boole Sync();
-        /// @copydoc iInStream::GetAsString()
-        [[nodiscard]] virtual String GetAsString();
 
         ///////////////////////////////////////////////////////////////////////////////
         // Output methods
 
-        /// @copydoc iOutStream::Write(const void*, StreamSize)
-        virtual size_t Write(const void* Buffer, StreamSize Size);
+        /// @copydoc OutputStream::Write(const void*, StreamSize)
+        virtual Boole Write(const void* Buffer, StreamSize Size);
 
-        /// @copydoc iOutStream::SetWritePosition(StreamPos)
+        /// @copydoc OutputStream::SetWritePosition(StreamPos)
         virtual void SetWritePosition(StreamPos Position);
-        /// @copydoc iOutStream::SetWritePosition(StreamOff, SeekOrigin)
+        /// @copydoc OutputStream::SetWritePosition(StreamOff, SeekOrigin)
         virtual void SetWritePosition(StreamOff Offset, SeekOrigin Origin);
-        /// @copydoc iOutStream::GetWritePosition()
+        /// @copydoc OutputStream::GetWritePosition()
         [[nodiscard]] virtual StreamPos GetWritePosition();
 
-        /// @copydoc iOutStream::Flush()
+        /// @copydoc OutputStream::Flush()
         virtual Boole Flush();
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -125,12 +123,12 @@ namespace Mezzanine
         /// @param Offset The number of bytes to move the cursors back(if negative) or forward(if positive).
         /// @param Origin The starting point to be considered for the offset.
         virtual void SetStreamPosition(StreamOff Offset, SeekOrigin Origin);
-    };//IOStream
+    };//InputOutputStream
 
     RESTORE_WARNING_STATE
 
     /// @brief Convenience type for a standard input/output stream in a shared_ptr.
-    using IOStreamPtr = std::shared_ptr<IOStream>;
+    using InputOutputStreamPtr = std::shared_ptr<InputOutputStream>;
 }//Mezzanine
 
 #endif

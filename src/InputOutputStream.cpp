@@ -38,7 +38,7 @@
    John Blackwood - makoenergy02@gmail.com
 */
 
-#include "IOStream.h"
+#include "InputOutputStream.h"
 
 #include <cstring>
 
@@ -52,93 +52,74 @@ namespace {
 
 namespace Mezzanine
 {
-    IOStream::IOStream(std::streambuf* Buf) :
+    InputOutputStream::InputOutputStream(std::streambuf* Buf) :
         std::iostream(Buf)
         {  }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Stream Base Operations
 
-    Boole IOStream::EoF() const
+    Boole InputOutputStream::EoF() const
         { return this->eof(); }
 
-    Boole IOStream::Bad() const
+    Boole InputOutputStream::Bad() const
         { return this->bad(); }
 
-    Boole IOStream::Fail() const
+    Boole InputOutputStream::Fail() const
         { return this->fail(); }
 
-    Boole IOStream::IsValid() const
+    Boole InputOutputStream::IsValid() const
         { return this->good(); }
 
-    void IOStream::ClearErrors()
+    void InputOutputStream::ClearErrors()
         { this->clear(); }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Input methods
 
-    size_t IOStream::Read(void* Buffer, const StreamSize Size)
+    size_t InputOutputStream::Read(void* Buffer, const StreamSize Size)
     {
         this->read(static_cast<char*>(Buffer),Size);
         return static_cast<size_t>( this->gcount() );
     }
 
-    size_t IOStream::ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim)
+    size_t InputOutputStream::ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim)
     {
         this->getline(Buffer,Size,Delim);
         return static_cast<size_t>( this->gcount() );
     }
 
-    void IOStream::SetReadPosition(StreamPos Position)
+    void InputOutputStream::SetReadPosition(StreamPos Position)
         { this->seekg(Position); }
 
-    void IOStream::SetReadPosition(StreamOff Offset, SeekOrigin Origin)
+    void InputOutputStream::SetReadPosition(StreamOff Offset, SeekOrigin Origin)
         { this->seekg(Offset,static_cast<std::ios_base::seekdir>(Origin)); }
 
-    StreamPos IOStream::GetReadPosition()
+    StreamPos InputOutputStream::GetReadPosition()
         { return this->tellg(); }
 
-    Boole IOStream::Sync()
+    Boole InputOutputStream::Sync()
         { return ( this->sync() == 0 ); }
-
-    String IOStream::GetAsString()
-    {
-        String Ret;
-        size_t RetSize = static_cast<size_t>( this->GetSize() );
-        if( RetSize > 0 ) {
-            Ret.reserve(RetSize);
-        }
-
-        StreamPos SavedReadPos = this->GetReadPosition();
-        this->SetReadPosition(0);
-
-        Ret.append(std::istreambuf_iterator<char>(*this),{});
-
-        this->SetReadPosition(SavedReadPos);
-        return Ret;
-    }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Output methods
 
-    size_t IOStream::Write(const void* Buffer, StreamSize Size)
+    Boole InputOutputStream::Write(const void* Buffer, StreamSize Size)
     {
-        StreamPos PreWrite = this->tellp();
         this->write(static_cast<const char*>(Buffer),Size);
-        StreamPos PostWrite = this->tellp();
-        return ( PostWrite > PreWrite ? static_cast<size_t>( PostWrite - PreWrite ) : 0 );
+        return this->good();
     }
 
-    void IOStream::SetWritePosition(StreamPos Position)
+    void InputOutputStream::SetWritePosition(StreamPos Position)
         { this->seekp(Position); }
 
-    void IOStream::SetWritePosition(StreamOff Offset, SeekOrigin Origin)
+    void InputOutputStream::SetWritePosition(StreamOff Offset, SeekOrigin Origin)
         { this->seekp(Offset,static_cast<std::ios_base::seekdir>(Origin)); }
 
-    StreamPos IOStream::GetWritePosition()
+    StreamPos InputOutputStream::GetWritePosition()
         { return this->tellp(); }
 
-    Boole IOStream::Flush()
+    Boole InputOutputStream::Flush()
     {
         this->flush();
         return !this->fail();
@@ -147,16 +128,16 @@ namespace Mezzanine
     ///////////////////////////////////////////////////////////////////////////////
     // Input/Output methods
 
-    void IOStream::Advance(const StreamOff Count)
+    void InputOutputStream::Advance(const StreamOff Count)
         { this->SetStreamPosition(Count,SeekOrigin::Current); }
 
-    void IOStream::SetStreamPosition(StreamPos Position)
+    void InputOutputStream::SetStreamPosition(StreamPos Position)
     {
         this->seekg(Position);
         this->seekp(Position);
     }
 
-    void IOStream::SetStreamPosition(StreamOff Offset, SeekOrigin Origin)
+    void InputOutputStream::SetStreamPosition(StreamOff Offset, SeekOrigin Origin)
     {
         this->seekg(Offset,static_cast<std::ios_base::seekdir>(Origin));
         this->seekp(Offset,static_cast<std::ios_base::seekdir>(Origin));

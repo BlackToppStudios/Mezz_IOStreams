@@ -37,69 +37,42 @@
    Joseph Toppi - toppij@gmail.com
    John Blackwood - makoenergy02@gmail.com
 */
-#ifndef Mezz_IOStreams_IStream_h
-#define Mezz_IOStreams_IStream_h
+#ifndef Mezz_IOStreams_TextStreamWriter_h
+#define Mezz_IOStreams_TextStreamWriter_h
 
 #ifndef SWIG
-    #include "StreamBase.h"
+    #include "OutputStream.h"
 #endif
 
 namespace Mezzanine
 {
-    SAVE_WARNING_STATE
-    SUPPRESS_CLANG_WARNING("-Wpadded")
-
     ///////////////////////////////////////////////////////////////////////////////
-    /// @brief Base class for input (read) streams with minimal implementation.
+    /// @brief An output Stream (in text mode) helper class for safer streaming.
     ///////////////////////////////////////
-    class IStream : public iInStream, public std::istream
+    class MEZZ_LIB TextStreamWriter
     {
+    protected:
+        /// @brief A pointer to the Stream being written to.
+        StdOutputStreamPtr Stream;
     public:
-        /// @brief Class constructor.
-        /// @param Buf A pointer to the buffer that will be streamed.
-        IStream(std::streambuf* Buf);
+        /// @brief Stream constructor.
+        /// @param Output The Stream to read from.
+        TextStreamWriter(StdOutputStreamPtr Output);
         /// @brief Class destructor.
-        virtual ~IStream() = default;
+        ~TextStreamWriter() = default;
 
         ///////////////////////////////////////////////////////////////////////////////
-        // Stream Base Operations
+        // Writing
 
-        /// @copydoc iStreamBase::EoF() const
-        [[nodiscard]] virtual Boole EoF() const;
-        /// @copydoc iStreamBase::Bad() const
-        [[nodiscard]] virtual Boole Bad() const;
-        /// @copydoc iStreamBase::Fail() const
-        [[nodiscard]] virtual Boole Fail() const;
-        /// @copydoc iStreamBase::IsValid() const
-        [[nodiscard]] virtual Boole IsValid() const;
-        /// @copydoc iStreamBase::ClearErrors()
-        virtual void ClearErrors();
-
-        ///////////////////////////////////////////////////////////////////////////////
-        // Input Functions
-
-        /// @copydoc iInStream::Read(void*, const StreamSize)
-        virtual size_t Read(void* Buffer, const StreamSize Size);
-        /// @copydoc iInStream::ReadLine(Char8*, const StreamSize, const Char8)
-        virtual size_t ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim = '\n');
-
-        /// @copydoc iInStream::SetReadPosition(StreamPos)
-        virtual void SetReadPosition(StreamPos Position);
-        /// @copydoc iInStream::SetReadPosition(StreamOff, SeekOrigin)
-        virtual void SetReadPosition(StreamOff Offset, SeekOrigin Origin);
-        /// @copydoc iInStream::GetReadPosition()
-        [[nodiscard]] virtual StreamPos GetReadPosition();
-
-        /// @copydoc iInStream::Sync()
-        virtual Boole Sync();
-        /// @copydoc iInStream::GetAsString()
-        [[nodiscard]] virtual String GetAsString();
-    };//IStream
-
-    RESTORE_WARNING_STATE
-
-    /// @brief Convenience type for a standard input stream in a shared_ptr.
-    using IStreamPtr = std::shared_ptr<IStream>;
+        /// @brief Writes the contents of a String View to the Stream.
+        /// @param ToWrite The String to write to the Stream.
+        /// @return Returns true if the Stream is still in a valid state after the Write.
+        Boole Write(const StringView ToWrite);
+        /// @brief Writes a single character to the Stream.
+        /// @param ToWrite The character to write to the Stream.
+        /// @return Returns true if the Stream is still in a valid state after the Write.
+        Boole Write(const Char8 ToWrite);
+    };//TextStreamWriter
 }//Mezzanine
 
 #endif

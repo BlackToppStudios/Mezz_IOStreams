@@ -87,13 +87,13 @@ namespace Mezzanine
     ///////////////////////////////////////////////////////////////////////////////
     /// @brief The base interface for I/O Streams.
     ///////////////////////////////////////
-    class iStreamBase
+    class StreamBase
     {
     public:
         /// @brief Class constructor.
-        iStreamBase() = default;
+        StreamBase() = default;
         /// @brief Class destructor.
-        virtual ~iStreamBase() = default;
+        virtual ~StreamBase() = default;
 
         /// @brief Gets the identifier for this Stream.
         /// @remarks Typically the identifier will uniquely identify the source of the Stream such
@@ -138,8 +138,10 @@ namespace Mezzanine
         /// @remarks This is useful for non-critical errors such as ones that cause "EoF()" or "Fail()" to return true but not
         /// "Bad()".  Using this to clear critical errors is not advised.
         virtual void ClearErrors() = 0;
-    };//iStreamBase
+    };//StreamBase
 
+    // This is necessary for enforce a memory layout favorable to virtual inheritance in MSVC.
+    // Without it, linking errors could occur.
     #ifdef _MSC_VER
     #pragma vtordisp(push, 2)
     #endif
@@ -147,13 +149,13 @@ namespace Mezzanine
     ///////////////////////////////////////////////////////////////////////////////
     /// @brief Interface class for input (read) Streams.
     ///////////////////////////////////////
-    class iInStream : virtual public iStreamBase
+    class InputStreamBase : virtual public StreamBase
     {
     public:
         /// @brief Class constructor.
-        iInStream() = default;
+        InputStreamBase() = default;
         /// @brief Class destructor.
-        virtual ~iInStream() = default;
+        virtual ~InputStreamBase() = default;
 
         /// @brief Reads from the Stream and copies that data to a buffer.
         /// @param Buffer The buffer to be populated with the read data.
@@ -181,28 +183,24 @@ namespace Mezzanine
         /// @brief Synchronizes the internal Stream buffer with data from the Stream source.
         /// @return Returns true if the sync was successful and the Stream is usable, false otherwise.
         virtual Boole Sync() = 0;
-        /// @brief Gets the contents of the Stream as a String.
-        /// @warning This function may produce a VERY large String as it gets the entire Stream contents.
-        /// @return Returns a String with the contents of the Stream.
-        [[nodiscard]] virtual String GetAsString() = 0;
-    };//iInStream
+    };//InputStreamBase
 
     ///////////////////////////////////////////////////////////////////////////////
     /// @brief Interface class for output (write) Streams.
     ///////////////////////////////////////
-    class iOutStream : virtual public iStreamBase
+    class OutputStreamBase : virtual public StreamBase
     {
     public:
         /// @brief Class constructor.
-        iOutStream() = default;
+        OutputStreamBase() = default;
         /// @brief Class destructor.
-        virtual ~iOutStream() = default;
+        virtual ~OutputStreamBase() = default;
 
         /// @brief Writes data to the Stream.
         /// @param Buffer The memory buffer to write to this Stream.
         /// @param Size The size of the buffer being passed in.
-        /// @return Returns the number of bytes successfully written.
-        virtual size_t Write(const void* Buffer, StreamSize Size) = 0;
+        /// @return Returns true if the Stream remained valid through the operation and can be written to again.
+        virtual Boole Write(const void* Buffer, StreamSize Size) = 0;
 
         /// @brief Sets the position of the write cursor explicitly.
         /// @param Position The position to be set.
@@ -218,7 +216,7 @@ namespace Mezzanine
         /// @brief Flushes all writes to the Streams internal buffer to the Stream destination.
         /// @return Returns true if the flush was successful and the Stream is usable, false otherwise.
         virtual Boole Flush() = 0;
-    };//iOutStream
+    };//OutputStreamBase
 
     #ifdef _MSC_VER
     #pragma vtordisp(pop)

@@ -38,55 +38,56 @@
    John Blackwood - makoenergy02@gmail.com
 */
 
-#include "OStream.h"
+#include "InputStream.h"
 
 namespace Mezzanine
 {
-    OStream::OStream(std::streambuf* Buf) :
-        std::ostream(Buf)
+    InputStream::InputStream(std::streambuf* Buf) :
+        std::istream(Buf)
         {  }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Stream Base Operations
 
-    Boole OStream::EoF() const
+    Boole InputStream::EoF() const
         { return this->eof(); }
 
-    Boole OStream::Bad() const
+    Boole InputStream::Bad() const
         { return this->bad(); }
 
-    Boole OStream::Fail() const
+    Boole InputStream::Fail() const
         { return this->fail(); }
 
-    Boole OStream::IsValid() const
+    Boole InputStream::IsValid() const
         { return this->good(); }
 
-    void OStream::ClearErrors()
+    void InputStream::ClearErrors()
         { this->clear(); }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Output methods
+    // Input methods
 
-    size_t OStream::Write(const void* Buffer, StreamSize Size)
+    size_t InputStream::Read(void* Buffer, StreamSize Size)
     {
-        StreamPos PreWrite = this->tellp();
-        this->write(static_cast<const char*>(Buffer),Size);
-        StreamPos PostWrite = this->tellp();
-        return ( PostWrite > PreWrite ? static_cast<size_t>( PostWrite - PreWrite ) : 0 );
+        this->read(static_cast<char*>(Buffer),Size);
+        return static_cast<size_t>( this->gcount() );
     }
 
-    void OStream::SetWritePosition(StreamPos Position)
-        { this->seekp(Position); }
-
-    void OStream::SetWritePosition(StreamOff Offset, SeekOrigin Origin)
-        { this->seekp(Offset,static_cast<std::ios_base::seekdir>(Origin)); }
-
-    StreamPos OStream::GetWritePosition()
-        { return this->tellp(); }
-
-    Boole OStream::Flush()
+    size_t InputStream::ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim)
     {
-        this->flush();
-        return !this->fail();
+        this->getline(Buffer,Size,Delim);
+        return static_cast<size_t>( this->gcount() );
     }
+
+    void InputStream::SetReadPosition(StreamPos Position)
+        { this->seekg(Position); }
+
+    void InputStream::SetReadPosition(StreamOff Offset, SeekOrigin Origin)
+        { this->seekg(Offset,static_cast<std::ios_base::seekdir>(Origin)); }
+
+    StreamPos InputStream::GetReadPosition()
+        { return this->tellg(); }
+
+    Boole InputStream::Sync()
+        { return ( this->sync() == 0 ); }
 }

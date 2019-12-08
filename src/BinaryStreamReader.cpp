@@ -38,73 +38,37 @@
    John Blackwood - makoenergy02@gmail.com
 */
 
-#include "IStream.h"
+#include "BinaryStreamReader.h"
 
 namespace Mezzanine
 {
-    IStream::IStream(std::streambuf* Buf) :
-        std::istream(Buf)
+    BinaryStreamReader::BinaryStreamReader(StdInputStreamPtr Input) :
+        Stream(Input)
         {  }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Stream Base Operations
+    // Reading
 
-    Boole IStream::EoF() const
-        { return this->eof(); }
-
-    Boole IStream::Bad() const
-        { return this->bad(); }
-
-    Boole IStream::Fail() const
-        { return this->fail(); }
-
-    Boole IStream::IsValid() const
-        { return this->good(); }
-
-    void IStream::ClearErrors()
-        { this->clear(); }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Input methods
-
-    size_t IStream::Read(void* Buffer, StreamSize Size)
+    BinaryBuffer BinaryStreamReader::Read(const SizeType Bytes)
     {
-        this->read(static_cast<char*>(Buffer),Size);
-        return static_cast<size_t>( this->gcount() );
+        BinaryBuffer ToReturn(Bytes);
+        this->Stream->read(reinterpret_cast<char*>(ToReturn.Binary),Bytes);
+        ToReturn.Size = this->Stream->gcount();
+        return ToReturn;
     }
 
-    size_t IStream::ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim)
+    SizeType BinaryStreamReader::Skip(const SizeType Bytes)
     {
-        this->getline(Buffer,Size,Delim);
-        return static_cast<size_t>( this->gcount() );
+        this->Stream->ignore(static_cast<StreamSize>(Bytes));
+        return static_cast<SizeType>( this->Stream->gcount() );
     }
 
-    void IStream::SetReadPosition(StreamPos Position)
-        { this->seekg(Position); }
-
-    void IStream::SetReadPosition(StreamOff Offset, SeekOrigin Origin)
-        { this->seekg(Offset,static_cast<std::ios_base::seekdir>(Origin)); }
-
-    StreamPos IStream::GetReadPosition()
-        { return this->tellg(); }
-
-    Boole IStream::Sync()
-        { return ( this->sync() == 0 ); }
-
-    String IStream::GetAsString()
+    Boole BinaryStreamReader::AtEnd() const
     {
-        String Ret;
-        size_t RetSize = static_cast<size_t>( this->GetSize() );
-        if( RetSize > 0 ) {
-            Ret.reserve(RetSize);
-        }
-
-        StreamPos SavedReadPos = this->GetReadPosition();
-        this->SetReadPosition(0);
-
-        Ret.append(std::istreambuf_iterator<char>(*this),{});
-
-        this->SetReadPosition(SavedReadPos);
-        return Ret;
+        // eof only checks already set bits and doesn't examine the Stream itself.
+        // So we need to perform an operation that can set the bit.
+        // peek can do this, with the bonus of not actually changing the Stream state.
+        this->Stream->peek();
+        return this->Stream->eof();
     }
-}
+}//Mezzanine
