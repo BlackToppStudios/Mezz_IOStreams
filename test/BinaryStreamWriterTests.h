@@ -65,6 +65,8 @@ struct BinaryStreamWriterStruct
     char CharVar4 = 0;
 };//BinaryStreamWriterStruct
 
+SAVE_WARNING_STATE
+SUPPRESS_CLANG_WARNING("-Wweak-vtables")
 /// @brief A simple streambuf implementation that allows access to the test struct from a Stream.
 class BinaryStreamWriterBuffer : public std::streambuf
 {
@@ -78,6 +80,7 @@ public:
     }
     ~BinaryStreamWriterBuffer() = default;
 };//BinaryStreamWriterBuffer
+RESTORE_WARNING_STATE
 
 AUTOMATIC_TEST_GROUP(BinaryStreamWriterTests,BinaryStreamWriter)
 {
