@@ -195,7 +195,7 @@ AUTOMATIC_TEST_GROUP(BinaryStreamWriterTests,BinaryStreamWriter)
 
     // Throw
     ReusableBuffer.Binary = nullptr;
-    ReusableBuffer.Size = -1;
+    ReusableBuffer.Size = std::numeric_limits<SizeType>::max();
     TEST_THROW("Write(const_BinaryBuffer&)-Throw",
                std::runtime_error,
                [&](){ TestWriter.Write(ReusableBuffer); });
