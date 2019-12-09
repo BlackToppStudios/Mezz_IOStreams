@@ -55,7 +55,7 @@ namespace Mezzanine
             throw std::runtime_error("Buffer size larger than StreamSize max value.");
         }
 
-        this->Stream->write(reinterpret_cast<char*>(ToWrite.Binary),ToWrite.Size);
+        this->Stream->write(reinterpret_cast<char*>(ToWrite.Binary),static_cast<StreamSize>(ToWrite.Size));
         return this->Stream->good();
     }
 }//Mezzanine

@@ -55,7 +55,7 @@ namespace Mezzanine
             throw std::runtime_error("String size larger than StreamSize max value.");
         }
 
-        this->Stream->write(ToWrite.data(),ToWrite.size());
+        this->Stream->write(ToWrite.data(),static_cast<StreamSize>(ToWrite.size()));
         return this->Stream->good();
     }
 
