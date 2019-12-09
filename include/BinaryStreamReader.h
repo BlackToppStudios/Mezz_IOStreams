@@ -71,7 +71,7 @@ namespace Mezzanine
         /// BinaryBuffer.
         /// @param Bytes The number of bytes to read from the Stream.
         /// @return Returns a BinaryBuffer containing the data read from the Stream.
-        [[nodiscard]] BinaryBuffer Read(const SizeType Bytes);
+        [[nodiscard]] BinaryBuffer Read(const StreamSize Bytes);
         /// @brief Reads the value of a standard arithmetic type from the Stream.
         /// @remarks The Stream doesn't actually know what types are where in the Stream. It is expected
         /// that the user of the Stream has taken precautions to make this coherent.
@@ -88,7 +88,7 @@ namespace Mezzanine
         /// @remarks The return and Bytes will match if the operation was successful.
         /// @param Bytes The number of bytes to advance in the Stream.
         /// @return The number of bytes actually skipped in the Stream.
-        SizeType Skip(const SizeType Bytes);
+        StreamSize Skip(const StreamSize Bytes);
 
         /// @brief Gets whether or not the read position has reached the end of the Stream
         /// @return Returns true if the Stream has reached EoF, false otherwise.

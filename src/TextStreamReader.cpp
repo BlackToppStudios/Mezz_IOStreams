@@ -49,12 +49,12 @@ namespace Mezzanine
     ///////////////////////////////////////////////////////////////////////////////
     // Reading
 
-    String TextStreamReader::Read(const SizeType Bytes)
+    String TextStreamReader::Read(const StreamSize Bytes)
     {
         String ToReturn;
         ToReturn.resize(Bytes,'\0');
         this->Stream->read(ToReturn.data(),Bytes);
-        SizeType BytesRead = this->Stream->gcount();
+        StreamSize BytesRead = this->Stream->gcount();
         if( BytesRead < Bytes ) {
             ToReturn.resize(BytesRead);
         }
@@ -75,10 +75,10 @@ namespace Mezzanine
         return ToReturn;
     }
 
-    SizeType TextStreamReader::Skip(const SizeType Bytes)
+    StreamSize TextStreamReader::Skip(const StreamSize Bytes)
     {
-        this->Stream->ignore(static_cast<StreamSize>(Bytes));
-        return static_cast<SizeType>( this->Stream->gcount() );
+        this->Stream->ignore(Bytes);
+        return this->Stream->gcount();
     }
 
     String TextStreamReader::GetAsString()

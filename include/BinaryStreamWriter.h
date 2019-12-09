@@ -66,6 +66,7 @@ namespace Mezzanine
         // Writing
 
         /// @brief Writes the contents of a BinaryBuffer to the Stream.
+        /// @exception If the buffer size is larger than StreamSize max value, an std::runtime_error will be thrown.
         /// @param ToWrite The buffer to be written to the Stream.
         /// @return Returns true if the Stream is still in a valid state after the Write.
         Boole Write(const BinaryBuffer& ToWrite);

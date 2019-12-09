@@ -99,6 +99,11 @@ AUTOMATIC_TEST_GROUP(TextStreamWriterTests,TextStreamWriter)
                true,TestWriter.Write("a waking dream..."));
     TEST_EQUAL("Write(const_StringView)-FourthLine-SecondHalf-Value",
                SourceBuffer,TestStream->str());
+
+    // I don't know how to make a very large String without causing OOM issues.
+    //TEST_THROW("Write(const_BinaryBuffer&)-Throw",
+    //           std::runtime_error,
+    //           [&](){ TestWriter.Write(String(std::numeric_limits<StreamSize>::max()+1,'\0')); });
 }
 
 #endif // Mezz_IOStreams_TextStreamWriterTests_h

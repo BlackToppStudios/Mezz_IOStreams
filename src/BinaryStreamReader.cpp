@@ -49,18 +49,24 @@ namespace Mezzanine
     ///////////////////////////////////////////////////////////////////////////////
     // Reading
 
-    BinaryBuffer BinaryStreamReader::Read(const SizeType Bytes)
+    BinaryBuffer BinaryStreamReader::Read(const StreamSize Bytes)
     {
-        BinaryBuffer ToReturn(Bytes);
-        this->Stream->read(reinterpret_cast<char*>(ToReturn.Binary),Bytes);
-        ToReturn.Size = this->Stream->gcount();
-        return ToReturn;
+        BinaryBuffer::Byte* MaybeReturn = new BinaryBuffer::Byte[Bytes];
+        this->Stream->read(reinterpret_cast<char*>(MaybeReturn),Bytes);
+        StreamSize ActuallyRead = this->Stream->gcount();
+        if( ActuallyRead < Bytes ) {
+            BinaryBuffer SmallerReturn(ActuallyRead);
+            std::copy_n(MaybeReturn,ActuallyRead,SmallerReturn.Binary);
+            delete[] MaybeReturn;
+            return SmallerReturn;
+        }
+        return BinaryBuffer(MaybeReturn,ActuallyRead);
     }
 
-    SizeType BinaryStreamReader::Skip(const SizeType Bytes)
+    StreamSize BinaryStreamReader::Skip(const StreamSize Bytes)
     {
-        this->Stream->ignore(static_cast<StreamSize>(Bytes));
-        return static_cast<SizeType>( this->Stream->gcount() );
+        this->Stream->ignore(Bytes);
+        return this->Stream->gcount();
     }
 
     Boole BinaryStreamReader::AtEnd() const

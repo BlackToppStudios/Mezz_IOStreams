@@ -69,7 +69,7 @@ namespace Mezzanine
         /// may not read the amount of bytes specified. To verify, query the size on the returned String.
         /// @param Bytes The number of bytes to read from the Stream.
         /// @return Returns a String containing the data read from the Stream.
-        [[nodiscard]] String Read(const SizeType Bytes);
+        [[nodiscard]] String Read(const StreamSize Bytes);
         /// @brief Reads characters from the Stream until the delimiter is found.
         /// @remarks This will also advance the Stream position by the number of bytes read, which includes the
         /// the specified delimiter. So any further read operation will begin at the Stream position just after the
@@ -85,7 +85,7 @@ namespace Mezzanine
         /// @remarks The return and Bytes will match if the operation was successful.
         /// @param Bytes The number of bytes to advance in the Stream.
         /// @return The number of bytes actually skipped in the Stream.
-        SizeType Skip(const SizeType Bytes);
+        StreamSize Skip(const StreamSize Bytes);
 
         /// @brief Reads the entire Stream and places it into a String.
         /// @remarks This function reads the entire Stream from start to finish. The read position will be saved,

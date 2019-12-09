@@ -192,6 +192,13 @@ AUTOMATIC_TEST_GROUP(BinaryStreamWriterTests,BinaryStreamWriter)
                false,TestWriter.Write(ReusableBuffer));
     TEST_EQUAL("Write(T)-EoF",
                false,TestWriter.Write(DoubleVar));
+
+    // Throw
+    ReusableBuffer.Binary = nullptr;
+    ReusableBuffer.Size = -1;
+    TEST_THROW("Write(const_BinaryBuffer&)-Throw",
+               std::runtime_error,
+               [&](){ TestWriter.Write(ReusableBuffer); });
 }
 
 #endif // Mezz_IOStreams_BinaryStreamWriterTests_h

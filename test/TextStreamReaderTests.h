@@ -67,10 +67,10 @@ AUTOMATIC_TEST_GROUP(TextStreamReaderTests,TextStreamReader)
                TestBuffer,TestReader.GetAsString());
 
     String FirstReadResult = TestReader.Read(14);
-    TEST_EQUAL("Read(const_SizeType)-First",
+    TEST_EQUAL("Read(const_StreamSize)-First",
                String("When the moon "),FirstReadResult);
     String SecondReadResult = TestReader.Read(19);
-    TEST_EQUAL("Read(const_SizeType)-Second",
+    TEST_EQUAL("Read(const_StreamSize)-Second",
                String("retires its gleam,\n"),SecondReadResult);
 
     String DefaultDelimLineResult = TestReader.ReadLine();
@@ -83,11 +83,15 @@ AUTOMATIC_TEST_GROUP(TextStreamReaderTests,TextStreamReader)
     TEST_EQUAL("ReadLine(const_Char8)-QuestionMarkDelim",
                String("rom bed anew"),QuestionMarkDelimLineResult);
 
-    TEST_EQUAL("ReadCharacter()-First",'\n',TestReader.ReadCharacter());
-    TEST_EQUAL("ReadCharacter()-Second",'O',TestReader.ReadCharacter());
-    TEST_EQUAL("ReadCharacter()-Third",'r',TestReader.ReadCharacter());
+    TEST_EQUAL("ReadCharacter()-First",
+               '\n',TestReader.ReadCharacter());
+    TEST_EQUAL("ReadCharacter()-Second",
+               'O',TestReader.ReadCharacter());
+    TEST_EQUAL("ReadCharacter()-Third",
+               'r',TestReader.ReadCharacter());
 
-    TEST_EQUAL("Skip(const_SizeType)",size_t(32),TestReader.Skip(32));
+    TEST_EQUAL("Skip(const_StreamSize)",
+               32,TestReader.Skip(32));
 
     TEST_EQUAL("AtEnd()_const-End",
                true,TestReader.AtEnd());
