@@ -38,13 +38,56 @@
    John Blackwood - makoenergy02@gmail.com
 */
 
-#include "ArchiveEntry.h"
-
-/// @file
-/// @brief This file shouldn't exist and the code here should be moved to the header once another source file exists.
+#include "InputStream.h"
 
 namespace Mezzanine
 {
-    PreciseReal ArchiveEntry::GetCompressionRatio() const
-        { return static_cast<PreciseReal>( this->CompressedSize ) / static_cast<PreciseReal>( this->Size ); }
-}//Mezzanine
+    InputStream::InputStream(std::streambuf* Buf) :
+        std::istream(Buf)
+        {  }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Stream Base Operations
+
+    Boole InputStream::EoF() const
+        { return this->eof(); }
+
+    Boole InputStream::Bad() const
+        { return this->bad(); }
+
+    Boole InputStream::Fail() const
+        { return this->fail(); }
+
+    Boole InputStream::IsValid() const
+        { return this->good(); }
+
+    void InputStream::ClearErrors()
+        { this->clear(); }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Input methods
+
+    size_t InputStream::Read(void* Buffer, StreamSize Size)
+    {
+        this->read(static_cast<char*>(Buffer),Size);
+        return static_cast<size_t>( this->gcount() );
+    }
+
+    size_t InputStream::ReadLine(Char8* Buffer, const StreamSize Size, const Char8 Delim)
+    {
+        this->getline(Buffer,Size,Delim);
+        return static_cast<size_t>( this->gcount() );
+    }
+
+    void InputStream::SetReadPosition(StreamPos Position)
+        { this->seekg(Position); }
+
+    void InputStream::SetReadPosition(StreamOff Offset, SeekOrigin Origin)
+        { this->seekg(Offset,static_cast<std::ios_base::seekdir>(Origin)); }
+
+    StreamPos InputStream::GetReadPosition()
+        { return this->tellg(); }
+
+    Boole InputStream::Sync()
+        { return ( this->sync() == 0 ); }
+}
