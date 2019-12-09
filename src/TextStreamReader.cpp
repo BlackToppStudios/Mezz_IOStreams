@@ -51,8 +51,7 @@ namespace Mezzanine
 
     String TextStreamReader::Read(const StreamSize Bytes)
     {
-        String ToReturn;
-        ToReturn.resize(static_cast<SizeType>(Bytes),'\0');
+        String ToReturn(static_cast<SizeType>(Bytes),'\0');
         this->Stream->read(ToReturn.data(),Bytes);
         StreamSize BytesRead = this->Stream->gcount();
         if( BytesRead < Bytes ) {
