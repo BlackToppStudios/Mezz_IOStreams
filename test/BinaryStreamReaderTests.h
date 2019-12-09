@@ -82,6 +82,8 @@ public:
 };//BinaryStreamReaderBuffer
 RESTORE_WARNING_STATE
 
+SAVE_WARNING_STATE
+SUPPRESS_CLANG_WARNING("-Wcast-align")
 AUTOMATIC_TEST_GROUP(BinaryStreamReaderTests,BinaryStreamReader)
 {
     using namespace Mezzanine;
@@ -144,5 +146,6 @@ AUTOMATIC_TEST_GROUP(BinaryStreamReaderTests,BinaryStreamReader)
     TEST_EQUAL("AtEnd()_const-End",
                true,TestReader.AtEnd());
 }
+SAVE_WARNING_STATE
 
 #endif // Mezz_IOStreams_BinaryStreamReaderTests_h
