@@ -52,11 +52,11 @@ namespace Mezzanine
     String TextStreamReader::Read(const StreamSize Bytes)
     {
         String ToReturn;
-        ToReturn.resize(Bytes,'\0');
+        ToReturn.resize(static_cast<SizeType>(Bytes),'\0');
         this->Stream->read(ToReturn.data(),Bytes);
         StreamSize BytesRead = this->Stream->gcount();
         if( BytesRead < Bytes ) {
-            ToReturn.resize(BytesRead);
+            ToReturn.resize(static_cast<SizeType>(BytesRead));
         }
         return ToReturn;
     }
