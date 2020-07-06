@@ -73,7 +73,7 @@ AUTOMATIC_TEST_GROUP(TextStreamWriterTests,TextStreamWriter)
     TEST_EQUAL("Write(const_Char8)-ThirdLine-FirstChar-Valid",
                true,TestWriter.Write('D'))
     TEST_EQUAL("Write(const_Char8)-ThirdLine-FirstChar-Value",
-               SourceBuffer.substr(0,68),TestStream->str());
+               SourceBuffer.substr(0,68),TestStream->str())
     TEST_EQUAL("Write(const_Char8)-ThirdLine-SecondChar-Valid",
                true,TestWriter.Write('o'))
     TEST_EQUAL("Write(const_Char8)-ThirdLine-SecondChar-Value",
@@ -98,7 +98,7 @@ AUTOMATIC_TEST_GROUP(TextStreamWriterTests,TextStreamWriter)
     TEST_EQUAL("Write(const_StringView)-FourthLine-SecondHalf-Valid",
                true,TestWriter.Write("a waking dream..."))
     TEST_EQUAL("Write(const_StringView)-FourthLine-SecondHalf-Value",
-               SourceBuffer,TestStream->str());
+               SourceBuffer,TestStream->str())
 
     // I don't know how to make a very large String without causing OOM issues.
     // Solution: Simple! Use PAE and Buy many PB of RAM!
