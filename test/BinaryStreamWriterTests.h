@@ -44,6 +44,7 @@
 /// @brief This file tests the functionality of the BinaryStreamWriter class.
 
 #include "MezzTest.h"
+#include "MezzException.h"
 
 #include "BinaryStreamWriter.h"
 
@@ -112,96 +113,96 @@ AUTOMATIC_TEST_GROUP(BinaryStreamWriterTests,BinaryStreamWriter)
     ReusableBuffer.Binary = reinterpret_cast<BinaryBuffer::Byte*>(&DoubleVar);
     ReusableBuffer.Size = sizeof(double);
     TEST_EQUAL("Write(const_BinaryBuffer&)-DoubleVar-Valid",
-               true,TestWriter.Write(ReusableBuffer));
+               true,TestWriter.Write(ReusableBuffer))
     TEST_EQUAL_EPSILON("Write(const_BinaryBuffer&)-DoubleVar-Value",
-                       DoubleVar,TestStruct.DoubleVar);
+                       DoubleVar,TestStruct.DoubleVar)
     // FloatVar1
     TEST_EQUAL("Write(T)-FloatVar1-Valid",
-               true,TestWriter.Write(FloatVar1));
+               true,TestWriter.Write(FloatVar1))
     TEST_EQUAL_EPSILON("Write(T)-FloatVar1-Value",
-                       FloatVar1,TestStruct.FloatVar1);
+                       FloatVar1,TestStruct.FloatVar1)
     // FloatVar2
     ReusableBuffer.Binary = reinterpret_cast<BinaryBuffer::Byte*>(&FloatVar2);
     ReusableBuffer.Size = sizeof(float);
     TEST_EQUAL("Write(const_BinaryBuffer&)-FloatVar2-Valid",
-               true,TestWriter.Write(ReusableBuffer));
+               true,TestWriter.Write(ReusableBuffer))
     TEST_EQUAL_EPSILON("Write(const_BinaryBuffer&)-FloatVar2-Value",
-                       FloatVar2,TestStruct.FloatVar2);
+                       FloatVar2,TestStruct.FloatVar2)
     // UIntVar1
     TEST_EQUAL("Write(T)-UIntVar1-Valid",
-               true,TestWriter.Write(UIntVar1));
+               true,TestWriter.Write(UIntVar1))
     TEST_EQUAL("Write(T)-UIntVar1-Value",
-               UIntVar1,TestStruct.UIntVar1);
+               UIntVar1,TestStruct.UIntVar1)
     // UIntVar2
     TEST_EQUAL("Write(T)-UIntVar2-Valid",
-               true,TestWriter.Write(UIntVar2));
+               true,TestWriter.Write(UIntVar2))
     TEST_EQUAL("Write(T)-UIntVar2-Value",
-               UIntVar2,TestStruct.UIntVar2);
+               UIntVar2,TestStruct.UIntVar2)
     // UIntVar3
     ReusableBuffer.Binary = reinterpret_cast<BinaryBuffer::Byte*>(&UIntVar3);
     ReusableBuffer.Size = sizeof(UInt32);
     TEST_EQUAL("Write(const_BinaryBuffer&)-UIntVar3-Valid",
-               true,TestWriter.Write(ReusableBuffer));
+               true,TestWriter.Write(ReusableBuffer))
     TEST_EQUAL("Write(const_BinaryBuffer&)-UIntVar3-Value",
-               UIntVar3,TestStruct.UIntVar3);
+               UIntVar3,TestStruct.UIntVar3)
     // UIntVar4
     ReusableBuffer.Binary = reinterpret_cast<BinaryBuffer::Byte*>(&UIntVar4);
     ReusableBuffer.Size = sizeof(UInt32);
     TEST_EQUAL("Write(const_BinaryBuffer&)-UIntVar4-Valid",
-               true,TestWriter.Write(ReusableBuffer));
+               true,TestWriter.Write(ReusableBuffer))
     TEST_EQUAL("Write(const_BinaryBuffer&)-UIntVar4-Value",
-               UIntVar4,TestStruct.UIntVar4);
+               UIntVar4,TestStruct.UIntVar4)
     // ShortVar1
     TEST_EQUAL("Write(T)-ShortVar1-Valid",
-               true,TestWriter.Write(ShortVar1));
+               true,TestWriter.Write(ShortVar1))
     TEST_EQUAL("Write(T)-ShortVar1-Value",
-               ShortVar1,TestStruct.ShortVar1);
+               ShortVar1,TestStruct.ShortVar1)
     // ShortVar2
     ReusableBuffer.Binary = reinterpret_cast<BinaryBuffer::Byte*>(&ShortVar2);
     ReusableBuffer.Size = sizeof(short);
     TEST_EQUAL("Write(const_BinaryBuffer&)-ShortVar2-Valid",
-               true,TestWriter.Write(ReusableBuffer));
+               true,TestWriter.Write(ReusableBuffer))
     TEST_EQUAL("Write(const_BinaryBuffer&)-ShortVar2-Value",
-               ShortVar2,TestStruct.ShortVar2);
+               ShortVar2,TestStruct.ShortVar2)
     // CharVar1
     TEST_EQUAL("Write(T)-CharVar1-Valid",
-               true,TestWriter.Write(CharVar1));
+               true,TestWriter.Write(CharVar1))
     TEST_EQUAL("Write(T)-CharVar1-Value",
-               CharVar1,TestStruct.CharVar1);
+               CharVar1,TestStruct.CharVar1)
     // CharVar2
     ReusableBuffer.Binary = reinterpret_cast<BinaryBuffer::Byte*>(&CharVar2);
     ReusableBuffer.Size = sizeof(char);
     TEST_EQUAL("Write(const_BinaryBuffer&)-CharVar2-Valid",
-               true,TestWriter.Write(ReusableBuffer));
+               true,TestWriter.Write(ReusableBuffer))
     TEST_EQUAL("Write(const_BinaryBuffer&)-CharVar2-Value",
-               CharVar2,TestStruct.CharVar2);
+               CharVar2,TestStruct.CharVar2)
     // CharVar3
     TEST_EQUAL("Write(T)-CharVar3-Valid",
-               true,TestWriter.Write(CharVar3));
+               true,TestWriter.Write(CharVar3))
     TEST_EQUAL("Write(T)-CharVar3-Value",
-               CharVar3,TestStruct.CharVar3);
+               CharVar3,TestStruct.CharVar3)
     // CharVar4
     ReusableBuffer.Binary = reinterpret_cast<BinaryBuffer::Byte*>(&CharVar4);
     ReusableBuffer.Size = sizeof(char);
     TEST_EQUAL("Write(const_BinaryBuffer&)-CharVar4-Valid",
-               true,TestWriter.Write(ReusableBuffer));
+               true,TestWriter.Write(ReusableBuffer))
     TEST_EQUAL("Write(const_BinaryBuffer&)-CharVar4-Value",
-               CharVar4,TestStruct.CharVar4);
+               CharVar4,TestStruct.CharVar4)
 
     // EoF
     ReusableBuffer.Binary = reinterpret_cast<BinaryBuffer::Byte*>(&DoubleVar);
     ReusableBuffer.Size = sizeof(double);
     TEST_EQUAL("Write(const_BinaryBuffer&)-EoF",
-               false,TestWriter.Write(ReusableBuffer));
+               false,TestWriter.Write(ReusableBuffer))
     TEST_EQUAL("Write(T)-EoF",
-               false,TestWriter.Write(DoubleVar));
+               false,TestWriter.Write(DoubleVar))
 
     // Throw
     ReusableBuffer.Binary = nullptr;
     ReusableBuffer.Size = std::numeric_limits<SizeType>::max();
     TEST_THROW("Write(const_BinaryBuffer&)-Throw",
-               std::runtime_error,
-               [&](){ TestWriter.Write(ReusableBuffer); });
+               Mezzanine::Exception::StreamOverflow,
+               [&](){ TestWriter.Write(ReusableBuffer); })
 }
 
 #endif // Mezz_IOStreams_BinaryStreamWriterTests_h

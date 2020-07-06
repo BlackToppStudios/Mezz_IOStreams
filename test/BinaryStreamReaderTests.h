@@ -95,56 +95,56 @@ AUTOMATIC_TEST_GROUP(BinaryStreamReaderTests,BinaryStreamReader)
     BinaryStreamReader TestReader(TestStream);
 
     TEST_EQUAL("AtEnd()_const-Begin",
-               false,TestReader.AtEnd());
+               false,TestReader.AtEnd())
 
     // DoubleVar
     TEST_EQUAL_EPSILON("Read(T)-DoubleVar",
-                       TestStruct.DoubleVar,TestReader.Read<double>());
+                       TestStruct.DoubleVar,TestReader.Read<double>())
     // FloatVar1
     TEST_EQUAL("Skip(const_StreamSize)-FloatVar1",
-               StreamSize( sizeof(float) ),TestReader.Skip( StreamSize( sizeof(float) ) ));
+               StreamSize( sizeof(float) ),TestReader.Skip( StreamSize( sizeof(float) ) ))
     // FloatVar2
     BinaryBuffer FloatBuffer = TestReader.Read( sizeof(float) );
     TEST_EQUAL("Read(const_StreamSize)-FloatVar2-BufferSize",
-               sizeof(float),FloatBuffer.Size);
+               sizeof(float),FloatBuffer.Size)
     TEST_EQUAL_EPSILON("Read(const_StreamSize)-FloatVar2-Value",
-                       TestStruct.FloatVar2,*reinterpret_cast<float*>(FloatBuffer.Binary));
+                       TestStruct.FloatVar2,*reinterpret_cast<float*>(FloatBuffer.Binary))
     // UIntVar1
     TEST_EQUAL("Read(T)-UIntVar1",
-               TestStruct.UIntVar1,TestReader.Read<UInt32>());
+               TestStruct.UIntVar1,TestReader.Read<UInt32>())
     // UIntVar2
     BinaryBuffer UInt32Buffer = TestReader.Read( sizeof(UInt32) );
     TEST_EQUAL("Read(const_StreamSize)-UIntVar2-BufferSize",
-               sizeof(UInt32),UInt32Buffer.Size);
+               sizeof(UInt32),UInt32Buffer.Size)
     TEST_EQUAL("Read(const_StreamSize)-UIntVar2-Value",
-               TestStruct.UIntVar2,*reinterpret_cast<UInt32*>(UInt32Buffer.Binary));
+               TestStruct.UIntVar2,*reinterpret_cast<UInt32*>(UInt32Buffer.Binary))
     // UIntVar3 & UIntVar4
     TEST_EQUAL("Skip(const_StreamSize)-UIntVar3-UIntVar4",
-               StreamSize( sizeof(UInt32) ) * 2,TestReader.Skip( StreamSize( sizeof(UInt32) ) * 2 ));
+               StreamSize( sizeof(UInt32) ) * 2,TestReader.Skip( StreamSize( sizeof(UInt32) ) * 2 ))
     // ShortVar1
     TEST_EQUAL("Read(T)-ShortVar1",
-               TestStruct.ShortVar1,TestReader.Read<short>());
+               TestStruct.ShortVar1,TestReader.Read<short>())
     // ShortVar2
     BinaryBuffer ShortBuffer = TestReader.Read( sizeof(short) );
     TEST_EQUAL("Read(const_StreamSize)-ShortVar2-BufferSize",
-               sizeof(short),ShortBuffer.Size);
+               sizeof(short),ShortBuffer.Size)
     TEST_EQUAL("Read(const_StreamSize)-ShortVar2-Value",
-               TestStruct.ShortVar2,*reinterpret_cast<short*>(ShortBuffer.Binary));
+               TestStruct.ShortVar2,*reinterpret_cast<short*>(ShortBuffer.Binary))
     // CharVar1
     TEST_EQUAL("Read(T)-CharVar1",
-               TestStruct.CharVar1,TestReader.Read<char>());
+               TestStruct.CharVar1,TestReader.Read<char>())
     // CharVar2 & CharVar3
     TEST_EQUAL("Skip(const_StreamSize)-CharVar2-CharVar3",
-               StreamSize( sizeof(char) ) * 2,TestReader.Skip( StreamSize( sizeof(char) ) * 2 ));
+               StreamSize( sizeof(char) ) * 2,TestReader.Skip( StreamSize( sizeof(char) ) * 2 ))
     // CharVar4
     BinaryBuffer CharBuffer = TestReader.Read( sizeof(char) );
     TEST_EQUAL("Read(const_StreamSize)-CharVar4-BufferSize",
-               sizeof(char),CharBuffer.Size);
+               sizeof(char),CharBuffer.Size)
     TEST_EQUAL("Read(const_StreamSize)-CharVar4-Value",
-               TestStruct.CharVar4,*reinterpret_cast<char*>(CharBuffer.Binary));
+               TestStruct.CharVar4,*reinterpret_cast<char*>(CharBuffer.Binary))
 
     TEST_EQUAL("AtEnd()_const-End",
-               true,TestReader.AtEnd());
+               true,TestReader.AtEnd())
 }
 RESTORE_WARNING_STATE
 

@@ -70,6 +70,15 @@ IncludeJagatiPackage("Test")
 IncludeJagatiPackage("Foundation")
 
 ########################################################################################################################
+# Setup Exception Sources
+
+AddJagatiException("IOStream" "Base" "Base Exception for IO Streams.")
+
+AddJagatiException("StreamOverflow" "IOStream" "Some too large was jammed into or pull out of a stream.")
+
+EmitExceptionSource()
+
+########################################################################################################################
 # Source files
 message(STATUS "Determining Source Files.")
 

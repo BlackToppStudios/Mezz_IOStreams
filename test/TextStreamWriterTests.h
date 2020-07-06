@@ -61,46 +61,47 @@ AUTOMATIC_TEST_GROUP(TextStreamWriterTests,TextStreamWriter)
     TextStreamWriter TestWriter(TestStream);
 
     TEST_EQUAL("Write(const_StringView)-FirstLine-Valid",
-               true,TestWriter.Write("When the moon retires its gleam,\n"));
+               true,TestWriter.Write("When the moon retires its gleam,\n"))
     TEST_EQUAL("Write(const_StringView)-FirstLine-Value",
-               SourceBuffer.substr(0,33),TestStream->str());
+               SourceBuffer.substr(0,33),TestStream->str())
 
     TEST_EQUAL("Write(const_StringView)-SecondLine-Valid",
-               true,TestWriter.Write("And sunlight shines upon the dew,\n"));
+               true,TestWriter.Write("And sunlight shines upon the dew,\n"))
     TEST_EQUAL("Write(const_StringView)-SecondLine-Value",
-               SourceBuffer.substr(0,67),TestStream->str());
+               SourceBuffer.substr(0,67),TestStream->str())
 
     TEST_EQUAL("Write(const_Char8)-ThirdLine-FirstChar-Valid",
-               true,TestWriter.Write('D'));
+               true,TestWriter.Write('D'))
     TEST_EQUAL("Write(const_Char8)-ThirdLine-FirstChar-Value",
                SourceBuffer.substr(0,68),TestStream->str());
     TEST_EQUAL("Write(const_Char8)-ThirdLine-SecondChar-Valid",
-               true,TestWriter.Write('o'));
+               true,TestWriter.Write('o'))
     TEST_EQUAL("Write(const_Char8)-ThirdLine-SecondChar-Value",
-               SourceBuffer.substr(0,69),TestStream->str());
+               SourceBuffer.substr(0,69),TestStream->str())
     TEST_EQUAL("Write(const_Char8)-ThirdLine-ThirdChar-Valid",
-               true,TestWriter.Write(' '));
+               true,TestWriter.Write(' '))
     TEST_EQUAL("Write(const_Char8)-ThirdLine-ThirdChar-Value",
-               SourceBuffer.substr(0,70),TestStream->str());
+               SourceBuffer.substr(0,70),TestStream->str())
     TEST_EQUAL("Write(const_Char8)-ThirdLine-FourthChar-Valid",
-               true,TestWriter.Write('y'));
+               true,TestWriter.Write('y'))
     TEST_EQUAL("Write(const_Char8)-ThirdLine-FourthChar-Value",
-               SourceBuffer.substr(0,71),TestStream->str());
+               SourceBuffer.substr(0,71),TestStream->str())
 
     TEST_EQUAL("Write(const_StringView)-ThirdLine-Remainder-Valid",
-               true,TestWriter.Write("ou rise from bed anew?\n"));
+               true,TestWriter.Write("ou rise from bed anew?\n"))
     TEST_EQUAL("Write(const_StringView)-ThirdLine-Remainder-Value",
-               SourceBuffer.substr(0,94),TestStream->str());
+               SourceBuffer.substr(0,94),TestStream->str())
     TEST_EQUAL("Write(const_StringView)-FourthLine-FirstHalf-Valid",
-               true,TestWriter.Write("Or slumber on in "));
+               true,TestWriter.Write("Or slumber on in "))
     TEST_EQUAL("Write(const_StringView)-FourthLine-FirstHalf-Value",
-               SourceBuffer.substr(0,111),TestStream->str());
+               SourceBuffer.substr(0,111),TestStream->str())
     TEST_EQUAL("Write(const_StringView)-FourthLine-SecondHalf-Valid",
-               true,TestWriter.Write("a waking dream..."));
+               true,TestWriter.Write("a waking dream..."))
     TEST_EQUAL("Write(const_StringView)-FourthLine-SecondHalf-Value",
                SourceBuffer,TestStream->str());
 
     // I don't know how to make a very large String without causing OOM issues.
+    // Solution: Simple! Use PAE and Buy many PB of RAM!
     //TEST_THROW("Write(const_BinaryBuffer&)-Throw",
     //           std::runtime_error,
     //           [&](){ TestWriter.Write(String(std::numeric_limits<StreamSize>::max()+1,'\0')); });
