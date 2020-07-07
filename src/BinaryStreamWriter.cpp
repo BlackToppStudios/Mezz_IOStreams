@@ -39,6 +39,7 @@
 */
 
 #include "BinaryStreamWriter.h"
+#include "MezzException.h"
 
 namespace Mezzanine
 {
@@ -52,7 +53,7 @@ namespace Mezzanine
     Boole BinaryStreamWriter::Write(const BinaryBuffer& ToWrite)
     {
         if( static_cast<SizeType>(std::numeric_limits<StreamSize>::max()) < ToWrite.Size ) {
-            throw std::runtime_error("Buffer size larger than StreamSize max value.");
+            MEZZ_EXCEPTION(StreamOverflowCode, "Buffer size larger than StreamSize max value.")
         }
 
         this->Stream->write(reinterpret_cast<char*>(ToWrite.Binary),static_cast<StreamSize>(ToWrite.Size));

@@ -39,6 +39,7 @@
 */
 
 #include "TextStreamWriter.h"
+#include "MezzException.h"
 
 namespace Mezzanine
 {
@@ -52,7 +53,7 @@ namespace Mezzanine
     Boole TextStreamWriter::Write(const StringView ToWrite)
     {
         if( static_cast<SizeType>(std::numeric_limits<StreamSize>::max()) < ToWrite.size() ) {
-            throw std::runtime_error("String size larger than StreamSize max value.");
+            MEZZ_EXCEPTION(StreamOverflowCode, "String size larger than StreamSize max value.")
         }
 
         this->Stream->write(ToWrite.data(),static_cast<StreamSize>(ToWrite.size()));

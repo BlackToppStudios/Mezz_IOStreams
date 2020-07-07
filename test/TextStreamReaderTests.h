@@ -61,40 +61,40 @@ AUTOMATIC_TEST_GROUP(TextStreamReaderTests,TextStreamReader)
     TextStreamReader TestReader(TestStream);
 
     TEST_EQUAL("AtEnd()_const-Begin",
-               false,TestReader.AtEnd());
+               false,TestReader.AtEnd())
 
     TEST_EQUAL("GetAsString()",
-               TestBuffer,TestReader.GetAsString());
+               TestBuffer,TestReader.GetAsString())
 
     String FirstReadResult = TestReader.Read(14);
     TEST_EQUAL("Read(const_StreamSize)-First",
-               String("When the moon "),FirstReadResult);
+               String("When the moon "),FirstReadResult)
     String SecondReadResult = TestReader.Read(19);
     TEST_EQUAL("Read(const_StreamSize)-Second",
-               String("retires its gleam,\n"),SecondReadResult);
+               String("retires its gleam,\n"),SecondReadResult)
 
     String DefaultDelimLineResult = TestReader.ReadLine();
     TEST_EQUAL("ReadLine(const_Char8)-DefaultDelim",
-               String("And sunlight shines upon the dew,"),DefaultDelimLineResult);
+               String("And sunlight shines upon the dew,"),DefaultDelimLineResult)
     String FDelimLineResult = TestReader.ReadLine('f');
     TEST_EQUAL("ReadLine(const_Char8)-FDelim",
-               String("Do you rise "),FDelimLineResult);
+               String("Do you rise "),FDelimLineResult)
     String QuestionMarkDelimLineResult = TestReader.ReadLine('?');
     TEST_EQUAL("ReadLine(const_Char8)-QuestionMarkDelim",
-               String("rom bed anew"),QuestionMarkDelimLineResult);
+               String("rom bed anew"),QuestionMarkDelimLineResult)
 
     TEST_EQUAL("ReadCharacter()-First",
-               '\n',TestReader.ReadCharacter());
+               '\n',TestReader.ReadCharacter())
     TEST_EQUAL("ReadCharacter()-Second",
-               'O',TestReader.ReadCharacter());
+               'O',TestReader.ReadCharacter())
     TEST_EQUAL("ReadCharacter()-Third",
-               'r',TestReader.ReadCharacter());
+               'r',TestReader.ReadCharacter())
 
     TEST_EQUAL("Skip(const_StreamSize)",
-               32,TestReader.Skip(32));
+               32,TestReader.Skip(32))
 
     TEST_EQUAL("AtEnd()_const-End",
-               true,TestReader.AtEnd());
+               true,TestReader.AtEnd())
 }
 
 #endif // Mezz_IOStreams_TextStreamReaderTests_h

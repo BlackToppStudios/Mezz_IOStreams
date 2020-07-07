@@ -72,10 +72,10 @@ DEFAULT_TEST_GROUP(ArchiveEntryTests,ArchiveEntry)
     Fourth.CompressedSize = 12424;
 
     {//GetCompressionRatio
-        TEST_EQUAL_EPSILON("GetCompressionRatio()_const-First",0.25,First.GetCompressionRatio());
-        TEST_EQUAL_EPSILON("GetCompressionRatio()_const-Second",0.01,Second.GetCompressionRatio());
-        TEST_EQUAL_EPSILON("GetCompressionRatio()_const-Third",0.055,Third.GetCompressionRatio());
-        TEST_EQUAL_EPSILON("GetCompressionRatio()_const-Fourth",0.7765,Fourth.GetCompressionRatio());
+        TEST_EQUAL_EPSILON("GetCompressionRatio()_const-First",0.25,First.GetCompressionRatio())
+        TEST_EQUAL_EPSILON("GetCompressionRatio()_const-Second",0.01,Second.GetCompressionRatio())
+        TEST_EQUAL_EPSILON("GetCompressionRatio()_const-Third",0.055,Third.GetCompressionRatio())
+        TEST_EQUAL_EPSILON("GetCompressionRatio()_const-Fourth",0.7765,Fourth.GetCompressionRatio())
     }//GetCompressionRatio
 }
 
