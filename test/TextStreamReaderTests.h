@@ -44,6 +44,7 @@
 /// @brief This file tests the functionality of the TextStreamReader class.
 
 #include "MezzTest.h"
+#include "MezzException.h"
 
 #include "TextStreamReader.h"
 
@@ -65,6 +66,16 @@ AUTOMATIC_TEST_GROUP(TextStreamReaderTests,TextStreamReader)
 
     TEST_EQUAL("GetAsString()",
                TestBuffer,TestReader.GetAsString())
+    TEST_THROW("GetAsString()-MissingFileStream",
+               Mezzanine::Exception::StreamReadError,
+               [](){
+                    Mezzanine::TextStreamReader Reader(
+                        std::make_shared<std::ifstream>("ZZZ_NoSuchFile.txt.bad", std::ios::in)
+                    );
+                    std::cerr << Reader.GetAsString();
+
+    })
+
 
     String FirstReadResult = TestReader.Read(14);
     TEST_EQUAL("Read(const_StreamSize)-First",

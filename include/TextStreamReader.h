@@ -94,6 +94,7 @@ namespace Mezzanine
         /// @n @n
         /// This might produce a very large String. Be mindful of the Streams size when using this.
         /// @return Returns a String containing the entire contents of the Stream.
+        /// @throw If the underlying stream has issues this can throw a Mezzanine::Exception::StreamReadError .
         [[nodiscard]] String GetAsString();
         /// @brief Gets whether or not the read position has reached the end of the Stream
         /// @return Returns true if the Stream has reached EoF, false otherwise.
