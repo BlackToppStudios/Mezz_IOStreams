@@ -75,6 +75,7 @@ IncludeJagatiPackage("Foundation")
 AddJagatiException("IOStream" "Base" "Base Exception for IO Streams.")
 
 AddJagatiException("StreamOverflow" "IOStream" "Something too large was jammed into or pulled out of a stream.")
+AddJagatiException("StreamReadError" "IOStream" "Failed to extract Data from a stream.")
 
 EmitExceptionSource()
 

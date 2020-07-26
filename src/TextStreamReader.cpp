@@ -39,6 +39,7 @@
 */
 
 #include "TextStreamReader.h"
+#include "MezzException.h"
 
 namespace Mezzanine
 {
@@ -82,21 +83,28 @@ namespace Mezzanine
 
     String TextStreamReader::GetAsString()
     {
-        String ToReturn;
-        StreamPos SavedReadPos = this->Stream->tellg();
+        const StreamPos SavedReadPos = this->Stream->tellg();
         if( SavedReadPos < 0 ) {
-            return ToReturn;
+            this->Stream->seekg(SavedReadPos); // Put the stream back how we found it
+            MEZZ_EXCEPTION(StreamReadErrorCode,
+                "Could not get current stream position while extracting all strean contents.")
         }
 
         this->Stream->seekg(0,std::ios::end);
-        SizeType ReturnSize = static_cast<SizeType>( this->Stream->tellg() );
-        if( ReturnSize > 0 ) {
-            ToReturn.reserve(ReturnSize);
+        const StreamPos ReturnSizeRaw = this->Stream->tellg();
+        if( ReturnSizeRaw < 0 ) {
+            this->Stream->seekg(SavedReadPos); // Put the stream back how we found it
+            MEZZ_EXCEPTION(StreamReadErrorCode,
+                "Nothing to extract while extracting all strean contents.")
         }
-        this->Stream->seekg(0,std::ios::beg);
 
-        ToReturn.append(std::istreambuf_iterator<char>( *(this->Stream.get()) ),{});
-        this->Stream->seekg(SavedReadPos);
+        const String::size_type ReturnSize = static_cast<String::size_type>(ReturnSizeRaw);
+
+        String ToReturn(ReturnSize,0);
+        this->Stream->seekg(0,std::ios::beg);
+        this->Stream->read(&ToReturn[0], ReturnSizeRaw);
+
+        this->Stream->seekg(SavedReadPos); // Put the stream back how we found it
         return ToReturn;
     }
 
