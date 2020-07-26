@@ -102,7 +102,7 @@ namespace Mezzanine
 
         String ToReturn(ReturnSize,0);
         this->Stream->seekg(0,std::ios::beg);
-        this->Stream->read(&ToReturn[0], ReturnSizeRaw);
+        this->Stream->read(&ToReturn[0],static_cast<StreamSize>(ReturnSizeRaw));
 
         this->Stream->seekg(SavedReadPos); // Put the stream back how we found it
         return ToReturn;
